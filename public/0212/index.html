@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script src="index.js"></script> -->
+</head>
+
+<body>
+  <!-- <div class="kento">
+    <h2 id="title">this is the title</h2>
+    <p id="kento">kento iizuka</p>
+    <p class="name">lkentp</p>
+    <p class="name">laknsdlknf</p>
+  </div>
+
+  <div class="dd">
+    <h2>
+      <span>kore</span>
+    </h2>
+  </div> -->
+
+  <div>
+    <h2>Search results</h2>
+    <ul id="search">
+    </ul>
+  </div>
+
+  <button onclick="kento(event)">push me</button>
+
+  <script>
+    // const title = document.getElementById('title')
+    // const span = document.querySelector('.dd h2 span')
+    // const spans = document.querySelectorAll('div.dd h2 span')
+
+    // title.innerText = 'kento iizuka death yo'
+
+    // title.remove()
+
+    // const obj = {
+    //   key: 'value',
+    //   kento: () => {
+    //     console.log('function mo dekiru')
+    //   }
+    // }
+    // // obj.kento()
+
+    // const kento = document.querySelector('div.kento')
+    // const mochi = document.createElement('h2')
+    // mochi.innerText = 'mochida'
+    // kento.appendChild(mochi)
+
+    const data = [
+      '【2021年最新】医療脱毛を名古屋でするならどこ？おすすめの18院 ...',
+      '名古屋の医療脱毛クリニックおすすめ15選！ 全身・部位別料金が ...',
+      '名古屋で人気の医療脱毛クリニック16選！費用やおすすめ部位は ...',
+      '名古屋のおすすめ医療脱毛クリニックをランキング比較！VIOや全身 ...',
+      '【女性318人が選ぶ】名古屋にあるおすすめの医療脱毛クリニック ...',
+      '求人ボックス｜医療脱毛の仕事・求人 - 愛知県 名古屋市',
+      '【学生限定】学割でお得に医療脱毛できるおすすめクリニック ...',
+      '名古屋の医療脱毛クリニックならココ！おすすめのクリニックを ...',
+      '求人ボックス｜医療脱毛 看護師の仕事・求人 - 名古屋駅周辺',
+      '【2021年】名古屋市の医療脱毛 おすすめしたい6医院 - 身近で ...'
+    ]
+
+    data.forEach(el => {
+      const item = document.createElement('li')
+      const title = document.createElement('h2')
+      
+      const holder = document.getElementById('search')
+
+      title.innerText = el
+      title.style.fontSize = '0.8rem'
+      title.style.color = '#999999'
+
+      let clicked = false
+      item.style.listStyle = 'none'
+      item.addEventListener('click', (event) => {
+        const def = 'color: #999999; font-size: 0.8rem'
+        const changed = 'color: red; font-size: 0.5rem'
+        const { target } = event
+        target.style.cssText = clicked ? def : changed
+        clicked = !clicked
+
+        // if (clicked) {
+        //   target.style.cssText = 'color: #999999; font-size: 0.8rem'
+        //   clicked = false
+        // } else {
+        //   target.style.cssText = 'color: red; font-size: 0.5rem'
+        //   clicked = true
+        // }
+      })
+      item.appendChild(title)
+
+      holder.appendChild(item)
+    })
+
+    function kento (x) {
+      console.log(x.target)
+    }
+  </script>
+</body>
+
+</html>
