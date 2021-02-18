@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- AXIOS!!! -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <h1>家計簿</h1>
+
+  <form onSubmit="addRecord(event)">
+    <div class="form-item">
+      <label for="contents">コンテンツ</label>
+      <input type="text" name="contents">
+      <p class="error" id="contents-error"></p>
+    </div>
+
+    <div class="form-item">
+      <label for="category">カテゴリー</label>
+      <input type="text" name="category">
+      <p class="error" id="category-error"></p>
+    </div>
+
+    <div class="form-item">
+      <label for="price">値段</label>
+      <input type="text" name="price">
+      <p class="error" id="price-error"></p>
+    </div>
+
+    <div class="form-item">
+      <label for="memo">メモ</label>
+      <input type="text" name="memo">
+      <p class="error" id="memo-error"></p>
+    </div>
+
+    <button type="submit">追加</button>
+  </form>
+  <ul>
+  </ul>
+  <script>
+    const url = 'https://script.google.com/macros/s/AKfycbw-xnI-B0prbFKfMsFS1Tn71kgnzqi_NHsIeqwXKHzNAn6Q_JxBblWS/exec'
+
+    axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+    async function getData() {
+      const { data, status } = await axios.get(url)
+
+      if (status !== 200) return console.log('failed')
+
+      const holder = document.querySelector('ul')
+      for (item of data) {
+        const pre = document.createElement('pre')
+        pre.innerText = JSON.stringify(item, null, 2)
+        pre.style.paddingBottom = '2rem'
+
+        holder.append(pre)
+      }
+    }
+
+    // getData()
+
+    async function addRecord(e) {
+      e.preventDefault()
+
+      const {
+        target: {
+          elements:
+          {
+            category,
+            contents,
+            price,
+            memo
+          }
+        }
+      } = e
+
+      if (validation(category, true, null) && validation(contents, true, null) && validation(price, true, '[^0-9]') && validation(memo, false, null)) {
+        const t = await axios.post(url, {
+          price: 200
+        })
+
+        console.log(t)
+      }
+
+    }
+
+    function validation(element, required, pattern) {
+      const value = element.value
+
+      if (required && !value) {
+        const parent = element.parentNode
+        const errP = parent.querySelector('.error')
+
+        errP.innerText = '↑必ず入力して！'
+        errP.style.color = 'red'
+        errP.style.margin = 0
+
+        return false
+      }
+
+      if (pattern && value) {
+        const rex = new RegExp(pattern)
+        const mat = value.match(rex)
+
+        if (mat) {
+          const parent = element.parentNode
+          const errP = parent.querySelector('.error')
+
+          errP.innerText += '数字で入力して！'
+          return false
+        }
+      }
+
+      return true
+    }
+  </script>
+</body>
+
+</html>
